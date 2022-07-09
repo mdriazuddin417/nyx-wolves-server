@@ -21,9 +21,18 @@ async function run() {
     await client.connect();
     const productCollection = client.db("testCrud").collection("products");
 
+    //Single product Find
+    app.get("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.findOne(query);
+      res.send(result);
+    });
     //Product Add
     app.post("/product", async (req, res) => {
       const product = req.body;
+
       const result = await productCollection.insertOne({ ...product });
       res.send(result);
     });
