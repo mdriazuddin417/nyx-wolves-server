@@ -1,13 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const uri =
   "mongodb+srv://nyxWolvex:fC5RdYFUh7gjaviN@cluster0.iojys.mongodb.net/?retryWrites=true&w=majority";
@@ -16,6 +15,7 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
+
 async function run() {
   try {
     await client.connect();
@@ -36,7 +36,7 @@ async function run() {
       res.send(result);
     });
 
-    // // //Product Get
+    // //Product Get
     app.get("/product", async (req, res) => {
       const query = req.query;
       const result = await productCollection.find(query).toArray();
